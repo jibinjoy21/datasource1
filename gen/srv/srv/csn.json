@@ -1,0 +1,29 @@
+{
+  "definitions": {
+    "Sales": {
+      "kind": "entity",
+      "elements": {
+        "id": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "region": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "country": {
+          "type": "cds.String",
+          "length": 100
+        },
+        "amount": {
+          "type": "cds.Integer"
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v2.12.0",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}

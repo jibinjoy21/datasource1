@@ -1,0 +1,12 @@
+{
+    "role": {
+      "name": "external_access",
+      "object_privileges": [
+        {
+            "name": "SALES",
+            "type": "TABLE",
+            "privileges": [ "SELECT" ]
+        }
+      ]
+    }
+  }

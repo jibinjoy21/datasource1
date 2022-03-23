@@ -1,0 +1,47 @@
+---
+_schema-version: '3.1'
+ID: datasource1
+version: 1.0.0
+description: "A simple CAP project."
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx -p @sap/cds-dk cds build --production
+
+modules:
+  - name: datasource1-srv
+    type: nodejs
+    path: srv #gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: datasource1-db
+
+  - name: datasource1-db-deployer
+    type: hdb
+    path: db #gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: datasource1-db
+
+resources:
+  - name: datasource1-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      config:
+        schema: datasource1
+      service: hana # or 'hanatrial' on trial landscapes
+      service-plan: hdi-shared
+    properties:
+      hdi-service-name: ${service-name}
